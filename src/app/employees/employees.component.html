@@ -1,0 +1,80 @@
+
+<h1>Employee Data</h1>
+
+<ng-container *ngIf="employeeData!= null">
+<!-- Prime ng table below -->
+
+<!-- <p-table  #dt1
+[value]="employeeData" [tableStyle]="{'min-width': '60rem'}"
+[globalFilterFields]="[dynamicKeys[1]]"> 
+<ng-template pTemplate="caption">
+    <div >
+        <span >
+        <p-dropdown  [options]="age"  [(ngModel)]="selectedAge" (onChange)="onAgeChange(selectedAge.code)"  optionLabel="range" value ="code"></p-dropdown>
+       </span>
+        <span>
+            <input pInputText type="text" [(ngModel)]= "searchNameFilter" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+        </span>
+    </div>
+</ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn =  {{dynamicKeys[0]}} style="width:20%">{{dynamicKeys[0]}} <p-sortIcon field="code"></p-sortIcon></th>
+            <th pSortableColumn={{dynamicKeys[1]}} style="width:20%">{{dynamicKeys[1]}} <p-sortIcon field="name"></p-sortIcon></th>
+            <th pSortableColumn={{dynamicKeys[2]}} style="width:20%">{{dynamicKeys[2]}} <p-sortIcon field="category"></p-sortIcon></th>
+            <th pSortableColumn={{dynamicKeys[3]}}  style="width:20%">{{dynamicKeys[3]}} <p-sortIcon field="quantity"></p-sortIcon></th>
+            <th pSortableColumn={{dynamicKeys[4]}} style="width:20%">{{dynamicKeys[4]}} <p-sortIcon field="price"></p-sortIcon></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-employees>
+        <tr >
+            <td>{{ employees.id }}</td>
+            <td>{{ employees.employee_name }}</td>
+            <td>{{ employees.employee_salary }}</td>
+            <td>{{ employees.employee_age }}</td>
+            <td>{{ employees.profile_image }}</td>
+        </tr>
+    </ng-template>
+</p-table> -->
+
+
+<div>
+
+    <div>
+    <form [formGroup]="searchForm">
+        <div><input formControlName="search" placeholder="Employee Name" /></div>
+        </form>
+        <div> 
+        </div>
+        <span class="p-buttonset">
+            <p-dropdown  [options]="age"  [(ngModel)]="selectedAge" placeholder = "select Age Range" (onChange)="onAgeChange(selectedAge.code)"  
+            optionLabel="range" value ="code"></p-dropdown>
+            <button pButton pRipple label="salary ascending" (click)="salarySort('asc')" ></button>
+            <button pButton pRipple label="salary descending" (click)="salarySort('desc')" ></button>
+            <button pButton pRipple label="Clear Filter " (click)="clear()" ></button>
+        </span>
+    </div>
+    
+
+    <table style="width: 100%;">
+        <thead>
+            <tr>
+                <th >{{dynamicKeys[0]}} </th>
+                <th >{{dynamicKeys[1]}} </th>
+                <th >{{dynamicKeys[2]}} </th>
+                <th >{{dynamicKeys[3]}} </th>
+                <th >{{dynamicKeys[4]}} </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr  *ngFor="let employees of employeeData | searchFilter: searchForm.value.search ">
+            <td>{{ employees.id }}</td>
+            <td>{{ employees.employee_name }}</td>
+            <td>{{ employees.employee_salary }}</td>
+            <td>{{ employees.employee_age }}</td>
+            <td>{{ employees.profile_image }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</ng-container>
